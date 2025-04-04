@@ -2,6 +2,14 @@ This API is:
 1. build on Flask,
 2. Database: MySql Workbench
 
+Files: 
+README - readme.txt
+dependencies - requirements.txt
+API - application.py
+localhost to view output index.html
+sample data - insert_data.py
+
+
 Set Up steps:
 Ensure all dependencies from requirements.txt is installed using pip or pip3
 
