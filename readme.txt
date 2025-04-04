@@ -8,6 +8,7 @@ dependencies - requirements.txt
 API - application.py
 localhost to view output index.html
 sample data - insert_data.py
+API requests - postman_api_requests
 
 
 Set Up steps:
