@@ -1,0 +1,435 @@
+{
+	"info": {
+		"_postman_id": "446f9116-09f3-420a-b152-e9e6c327888a",
+		"name": "Universities",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43708618",
+		"_collection_link": "https://darylong-5293229.postman.co/workspace/Daryl-Ong's-Workspace~aa693aa0-5eb2-4874-810a-415d3b3048b8/collection/43708618-446f9116-09f3-420a-b152-e9e6c327888a?action=share&source=collection_link&creator=43708618"
+	},
+	"item": [
+		{
+			"name": "GET all Universities",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 500ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify array of universities is returned\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData.unis.unis_data).to.be.an('array').and.to.have.lengthOf.at.least(1);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify university names are present\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    const universityNames = responseData.unis.unis_data.map((uni) => uni.name);\r",
+							"    pm.expect(universityNames).to.include.members([\"National University of Singapore\", \"Nanyang Technological University\", \"Singapore Management University\", \"Singapore University of Technology and Design\", \"Yale-NUS College\"]);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/universities",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"universities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Create new uni entry",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\" : \"Test University\",\r\n    \"country\" : \"Test Country\",\r\n    \"webpages\" : \"TestWebpages.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/universities",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"universities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Test Uni to Delete later",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\" : \"Delete Uni\",\r\n    \"country\" : \"Delete Country\",\r\n    \"webpages\" : \"delete.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/universities",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"universities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET specific uni",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Verify the response body is a dictionary containing a university object with id equal to 1\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an('object');\r",
+							"    pm.expect(pm.response.json().country).to.exist;\r",
+							"    pm.expect(pm.response.json().created).to.exist;\r",
+							"    pm.expect(pm.response.json().deletedAt).to.be.null;\r",
+							"    pm.expect(pm.response.json().id).to.eql(1);\r",
+							"    pm.expect(pm.response.json().isActive).to.be.true;\r",
+							"    pm.expect(pm.response.json().isBookmarked).to.be.false;\r",
+							"    pm.expect(pm.response.json().lastModified).to.exist;\r",
+							"    pm.expect(pm.response.json().name).to.eql(\"National University of Singapore\");\r",
+							"    pm.expect(pm.response.json().webpages).to.eql(\"https://www.nus.edu.sg\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/universities/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"universities",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Update uni",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\" : \"Altered Uni\",\r\n    \"country\" : \"Altered Country\",\r\n    \"webpages\" : \"Altered.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/universities/11",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"universities",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE a uni entry",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Send a request to check if the entry with id 12 is deleted from the database\r",
+							"pm.sendRequest({\r",
+							"    url: 'http://127.0.0.1:5000/universities/12',\r",
+							"    method: 'GET',\r",
+							"}, (err, res) => {\r",
+							"    pm.test(\"Entry should not exist in the database\", () => {\r",
+							"        pm.expect(res.code).to.equal(404);\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/universities/12",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"universities",
+						"12"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE isBookmark to true",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/universities/bookmark/11",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"universities",
+						"bookmark",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/universities?name=Singapore",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"universities"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Singapore"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pagination-1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/universities?page=2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"universities"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pagination-2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/universities?page=2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"universities"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pagination-3",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/universities?page=2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"universities"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
