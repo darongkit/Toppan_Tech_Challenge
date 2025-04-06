@@ -34,6 +34,8 @@ Once Database is running, venv is activated.
 
 Postman was used to test the api response.
     refer to the postman_api_requests json file for reference.
+        if prompted "Unauthorized Access", go to 'authrization' tab and input username and password
+        users, password: daryl-123456, admin-admin
     To use the json file: 
         Import file into your postman software.
         If not installed, install postman from official website.
