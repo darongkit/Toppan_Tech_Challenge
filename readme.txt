@@ -9,6 +9,7 @@ API - application.py
 localhost to view output index.html
 sample data - insert_data.py
 API requests - postman_api_requests
+localhost webpage - index.html
 
 
 Set Up steps:
@@ -39,6 +40,15 @@ Postman was used to test the api response.
     To use the json file: 
         Import file into your postman software.
         If not installed, install postman from official website.
+
+**note**
+HTML Webpage
+shows list of bookmarked universities, followed by list of all universities.
+**buttons do not work, have to input page filter in URL to go next page. 
+    insert as follows:
+        http://127.0.0.1:5000/universities?page=1
+        http://127.0.0.1:5000/universities?page=2
+        ...
 
 Completed Task:
 Challenge 1
