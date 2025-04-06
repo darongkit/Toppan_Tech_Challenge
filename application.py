@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from flask_httpauth import HTTPBasicAuth
 import datetime
 
 app = Flask(__name__)
@@ -26,6 +27,18 @@ class University(db.Model):
 with app.app_context():
     db.create_all()    
 
+# Auth Method
+auth = HTTPBasicAuth()
+users = {
+    "daryl" : "123456",
+    "admin" : "admin"
+}
+
+@auth.verify_password
+def verify_password(username, password):
+    if username in users and users[username] == password:
+        return username
+
 # API Methods
 @app.route('/') # default
 def index():
@@ -33,6 +46,7 @@ def index():
 
 # --------------- Challenge 1 ---------------
 @app.route('/universities', methods=['GET']) # GET list of all unis
+@auth.login_required
 def get_unis():
 
     # Challenge 2: Filter
@@ -170,6 +184,7 @@ def get_unis():
     })
 
 @app.route('/universities', methods=['POST'])    # Add new univeristy
+@auth.login_required
 def add_uni():
     data = request.get_json()
 
@@ -190,6 +205,7 @@ def add_uni():
     return jsonify({'id': uni.id}), 201
 
 @app.route('/universities/<int:id>', methods=['GET'])   # GET list of uni by id
+@auth.login_required
 def get_specific_unis(id):
     uni = University.query.get_or_404(id)
     uni_data = {
@@ -207,6 +223,7 @@ def get_specific_unis(id):
     return jsonify(uni_data)
 
 @app.route('/universities/<id>', methods=['PUT'])   # Update uni details
+@auth.login_required
 def update_uni(id):
     uni = University.query.get_or_404(id) 
     data = request.get_json()
@@ -227,6 +244,7 @@ def update_uni(id):
     return jsonify({'message': 'University updated successfully', 'id': uni.id}), 200
 
 @app.route('/universities/<id>', methods=['DELETE'])    # DELETE a uni
+@auth.login_required
 def delete_uni(id):
     uni = University.query.get(id)
     if uni is None:
@@ -238,6 +256,7 @@ def delete_uni(id):
     return jsonify({'message': 'University deleted successfully', 'id': uni.id}), 200
 
 @app.route('/universities/bookmark/<id>', methods=['POST'])     # POST Bookmark a uni
+@auth.login_required
 def bookmark_uni(id):
     uni = University.query.get_or_404(id)
     if uni.isBookmarked == True:
